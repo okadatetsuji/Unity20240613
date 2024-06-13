@@ -28,6 +28,9 @@ public class BlockGenerator : MonoBehaviour
                 go.transform.position = new Vector3(px + (j * (span + BlockScaleX)), py + (i * (span + BlockScaleY)), 0);
             }
         }
+
+        // ÉXÉRÉAÇÃèâä˙âª
+        ScoreScript.instance.ScoreManager(0);
     }
 
     // Update is called once per frame

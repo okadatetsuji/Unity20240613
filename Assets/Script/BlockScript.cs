@@ -8,7 +8,16 @@ public class BlockScript : MonoBehaviour
     // 何かとぶつかったときビルトインメソッド
     private void OnCollisionEnter(Collision collision)
     {
-        ScoreScript.instance.set
+        //ScoreScript.instance.set
+        // スコアをScoreScriptから追加
+        if(ScoreScript.instance != null)
+        {
+            ScoreScript.instance.ScoreManager(score);
+        }
+        else
+        {
+            Debug.LogError("インスタンスがありません");
+        }
         // ゲームオブジェクトを削除
         Destroy(gameObject);
     }

@@ -6,21 +6,43 @@ using UnityEngine;
 
 public class ScoreScript : MonoBehaviour
 {
-    GameObject score;
-    GameObject block;
-    static int totalScore = 0;
+    // クラスの唯一のインスタンスを保持するための静的な変数
     public static ScoreScript instance;
-    // Start is called before the first frame update
-    void Start()
-    {
-        this.score = GameObject.Find("Score");
-        this.block = GameObject.Find("BlockPrefab");
-    }
+    // スコアの表示するためのtextコンポーネントとトータルスコア
+    public GameObject scoreText;
+    private int totalScore = 0;
 
-    // Update is called once per frame
+    // プライベートコンストラクタ
+    private void Awake()
+    {
+        // インスタンスが存在しない場合はこのインスタンスを設定
+        if(instance == null)
+        {
+            instance = this;
+            DontDestroyOnLoad(gameObject);      // シーンをまたいでもインスタンスを保持
+        }
+        // 既に存在する場合は新しいインスタンスを破棄
+        else
+        {
+            Destroy(gameObject);
+        }
+    }
+    // 反映されるためのメソッドを定義
+    private void Start()
+    {
+        // 初期表示
+        UpdateScoreText();
+    }
+    // スコアを更新して、Textコンポーネントに反映する
     public void ScoreManager(int score)
     {
         totalScore += score;
-        this.score.GetComponent<TextMeshProUGUI>().text = score.ToString();
+        // コンポーネントを表示する
+        UpdateScoreText();
+    }
+    // スコアをTextコンポーネントに表示するメソッド
+    private void UpdateScoreText()
+    {
+        this.scoreText.GetComponent<TextMeshProUGUI>().text = "Score :"+ totalScore.ToString();
     }
 }
